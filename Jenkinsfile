@@ -18,6 +18,17 @@ pipeline {
                 steps {
                     git branch: 'main', credentialsId: 'github', url: 'https://github.com/K1kc4/complete-prodcution-e2e-pipeline.git'
                 }
+
+            stage ("Build") {   
+                steps {
+                    sh "mvn clean package"
+                }
+            }
+
+            stage ("Test") {
+                steps {
+                    sh "mvn test"
+                }
             }
         }
 }
