@@ -13,7 +13,7 @@ pipeline {
             DOCKER_USER = "yordo"
             DOCKER_PASS = 'docker'
             IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-            IMAGE_TAG = "${RELEASE}"-"${BUILD_NUMBER}" 
+            IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}" 
         }
 
         stages {
@@ -57,9 +57,10 @@ pipeline {
 
             stage ("Build and push image") {
                 steps {
+                  script{
                     docker.withRegistry('',DOCKER_PASS) {
                         docker_image = docker.build "${IMAGE_NAME}"
-                    }
+                        }
 
                     docker.withRegistry('',DOCKER_PASS) {
                         docker_image.push("${IMAGE_TAG}")
