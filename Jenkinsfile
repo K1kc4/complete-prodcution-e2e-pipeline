@@ -38,6 +38,12 @@ pipeline {
                         sh "mvn sonar:sonar"
                     }
                 }
+            }
+
+            stage ("QualityGate") {
+                steps {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+               }
             }        
     }
 
